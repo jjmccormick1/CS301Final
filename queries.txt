@@ -1,4 +1,4 @@
-final.query([Dept<=4,Age>35],[DocID,Dept,Age])
+final.query([Dept<=4,Age>35],[Age])
 final.count([Dept],[0])
 final.count([Dept],[1])
 final.insert(DocID:50 Spec1:61 Gender:1)

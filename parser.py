@@ -29,8 +29,7 @@ def query(queries):
         select = select.split(',')
         db = parsequery(qs)
         print(select)
-        data.printdb(select, db)
-
+        data.printdb(select, db)        
 
 
 def parsequery(queries):
