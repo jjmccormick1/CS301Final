@@ -1,9 +1,8 @@
 class database:
     docid = 0
-
+    db = {}
     def __init__(self, filename):
         self.db = self.parsefile(filename)
-
 
     def parsefile(self, filename):
         db = {}
@@ -26,7 +25,7 @@ class database:
 
     def lookup(self, compare, key, value, db):
         retdb = {}
-        for i in range(self.docid):
+        for i in range(self.docid + 1):
             if str(i) in db.keys():
                 row = db[str(i)]
                 if key in row.keys():
@@ -38,7 +37,7 @@ class database:
 
 
     def printdb(self, select, db):
-        for i in range(self.docid):
+        for i in range(self.docid+1):
             if str(i) in db.keys():
                 row = db[str(i)]
 
@@ -63,3 +62,18 @@ class database:
                             print(key + ':' + "NA", end=' ')
                 print()
         print()
+
+    def insertrow(self, row):
+        if "DocID" in row.keys():
+            dcid = row["DocID"]
+            if dcid in self.db.keys():
+                print("Duplicate DocID Error")
+                return
+            if int(dcid) > self.docid:
+                self.docid = int(dcid)
+            del row["DocID"]
+            self.db[str(dcid)] = row
+        else:
+            dcid = self.docid + 1
+            self.docid += 1
+            self.db[str(dcid)] = row

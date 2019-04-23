@@ -96,24 +96,14 @@ def count(counts):
 def insert(line):
     tmp = {}
     spl = line.split()
+    dcid=0
     for x in spl:
         x = x.split(':')
         tmp[x[0]] = x[1]
-    if "DocID" in tmp.keys():
-        dcid = tmp["DocID"]
-        if dcid in data.db.keys():
-            print("Duplicate DocID Error")
-            return
-        intid = int(dcid)
-        if intid > data.docid:
-            data.docid = intid
-        del tmp["DocID"]
-        data.db[dcid] = tmp
-    else:
-        dcid = data.docid + 1
-        data.docid += 1
-        data.db[str(dcid)] = tmp
-    print("DocID:" + dcid, end= ' ')
+
+    data.insertrow(tmp)
+    print(data.db)
+    print("DocID:" + str(dcid), end= ' ')
     for key in tmp.keys():
         print(key + ':' + tmp[key], end=' ')
     print()
