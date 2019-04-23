@@ -44,10 +44,17 @@ class database:
 
                 if "DocID" in select:
                     print("DocID" + ':' + str(i), end=' ')
-                if len(select) == 0:
+                    for key in select:
+                        if key in row.keys():
+                            print(key + ':' + row[key], end=' ')
+                        elif key != "DocID":
+                            print(key + ':' + "NA", end=' ')
+
+                elif len(select) == 0:
                     for key in row.keys():
                         if key != "DocID":
                             print(key + ':' + row[key], end=' ')
+
                 else:
                     for key in select:
                         if key in row.keys():
@@ -55,3 +62,4 @@ class database:
                         elif key != "DocID":
                             print(key + ':' + "NA", end=' ')
                 print()
+        print()
