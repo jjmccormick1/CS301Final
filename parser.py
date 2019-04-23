@@ -7,7 +7,8 @@ data = database.database("data.txt")
 def parse(line):
     print(line)
     l = line.split('.')
-    match("final", l[0])
+    if not match("final", l[0]):
+        return
     l = l[1]
     operation = l[:l.index('(')]
     if operation == "query":
@@ -16,7 +17,9 @@ def parse(line):
         count(l[l.find('(') + 1:(l.find(')'))])
     elif operation == "insert":
         insert(l[l.find('(') + 1:(l.find(')'))])
-
+    else:
+        print("query semantic error")
+        return
 
 def match(expected, real):
     if expected != real:
@@ -73,6 +76,9 @@ def parsequery(queries):
 
 def count(counts):
     tmp = re.findall("\[([A-Za-z0-9_<>=,\d*]+)\]", counts)
+    if len(tmp) != 2:
+        print("query semantic error")
+        return
     key = tmp[0]
     unique = tmp[1]
     cnt = 0
