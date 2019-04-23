@@ -1,9 +1,9 @@
 class database:
     docid = 0
-    db = {}
 
-    def __init__(self):
-        self.db = self.parsefile("data.txt")
+    def __init__(self, filename):
+        self.db = self.parsefile(filename)
+
 
     def parsefile(self, filename):
         db = {}

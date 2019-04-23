@@ -2,9 +2,10 @@ import re
 import database
 import operator
 
-data = database.database()
+data = database.database("data.txt")
 
 def parse(line):
+    print(line)
     l = line.split('.')
     match("final", l[0])
     l = l[1]
@@ -100,14 +101,14 @@ def insert(line):
         tmp[x[0]] = x[1]
     if "DocID" in tmp.keys():
         dcid = tmp["DocID"]
-        if id in data.db.keys():
+        if dcid in data.db.keys():
             print("Duplicate DocID Error")
             return
         intid = int(dcid)
         if intid > data.docid:
             data.docid = intid
         del tmp["DocID"]
-        data.db[id] = tmp
+        data.db[dcid] = tmp
     else:
         dcid = data.docid + 1
         data.docid += 1
