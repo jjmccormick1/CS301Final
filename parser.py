@@ -102,7 +102,6 @@ def insert(line):
         tmp[x[0]] = x[1]
 
     data.insertrow(tmp)
-    print(data.db)
     print("DocID:" + str(dcid), end= ' ')
     for key in tmp.keys():
         print(key + ':' + tmp[key], end=' ')
