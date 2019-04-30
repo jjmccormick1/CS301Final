@@ -68,7 +68,7 @@ class database:
             dcid = row["DocID"]
             if dcid in self.db.keys():
                 print("Duplicate DocID Error")
-                return
+                return -1
             if int(dcid) > self.docid:
                 self.docid = int(dcid)
             del row["DocID"]

@@ -23,6 +23,7 @@ def parse(line):
     except:
         print("query semantic error")
         return
+    print()
 
 def match(expected, real):
     if expected != real:
@@ -118,6 +119,8 @@ def insert(line):
         tmp[x[0]] = x[1]
 
     dcid = data.insertrow(tmp)
+    if dcid == -1:
+        return
     print("DocID:" + str(dcid), end= ' ')
     for key in tmp.keys():
         print(key + ':' + tmp[key], end=' ')
