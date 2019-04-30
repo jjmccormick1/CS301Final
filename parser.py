@@ -18,6 +18,8 @@ def parse(line):
             count(l[l.find('(') + 1:(l.find(')'))])
         elif operation == "insert":
             insert(l[l.find('(') + 1:(l.find(')'))])
+        else:
+            print("query semantic error")
     except:
         print("query semantic error")
         return
@@ -31,7 +33,6 @@ def match(expected, real):
 
 def query(queries):
     tmp = re.findall("\[([A-Za-z0-9_<>=,\d*]+)\]", queries)
-    print(tmp)
     if len(tmp) > 1:
         qs = tmp[0]
         qs = qs.split(',')
@@ -49,7 +50,6 @@ def query(queries):
             select = tmp
             data.printdb(select, data.db)
     else:
-        print(tmp)
         if "[],[]" in queries:
             data.printdb({}, data.db)
         else:
@@ -103,6 +103,9 @@ def count(counts):
                 elif key in row.keys() and row[key] not in isin:
                     cnt = cnt + 1
                     isin.extend([row[key]])
+            else:
+                print("query semantic error")
+                return
 
     print(cnt)
 
@@ -114,7 +117,7 @@ def insert(line):
         x = x.split(':')
         tmp[x[0]] = x[1]
 
-    data.insertrow(tmp)
+    dcid = data.insertrow(tmp)
     print("DocID:" + str(dcid), end= ' ')
     for key in tmp.keys():
         print(key + ':' + tmp[key], end=' ')

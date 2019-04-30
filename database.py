@@ -73,7 +73,9 @@ class database:
                 self.docid = int(dcid)
             del row["DocID"]
             self.db[str(dcid)] = row
+            return dcid
         else:
             dcid = self.docid + 1
             self.docid += 1
             self.db[str(dcid)] = row
+            return dcid
