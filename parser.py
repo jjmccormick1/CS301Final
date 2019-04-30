@@ -2,7 +2,7 @@ import re
 import database
 import operator
 
-data = database.database()
+data = database.database("data.txt")
 
 def parse(line):
     print(line)
@@ -21,7 +21,6 @@ def parse(line):
     except:
         print("query semantic error")
         return
-
 
 def match(expected, real):
     if expected != real:
@@ -84,6 +83,9 @@ def parsequery(queries):
 
 def count(counts):
     tmp = re.findall("\[([A-Za-z0-9_<>=,\d*]+)\]", counts)
+    if len(tmp) != 2:
+        print("query semantic error")
+        return
     key = tmp[0]
     unique = tmp[1]
     cnt = 0
@@ -107,24 +109,13 @@ def count(counts):
 def insert(line):
     tmp = {}
     spl = line.split()
+    dcid=0
     for x in spl:
         x = x.split(':')
         tmp[x[0]] = x[1]
-    if "DocID" in tmp.keys():
-        dcid = tmp["DocID"]
-        if id in data.db.keys():
-            print("Duplicate DocID Error")
-            return
-        intid = int(dcid)
-        if intid > data.docid:
-            data.docid = intid
-        del tmp["DocID"]
-        data.db[id] = tmp
-    else:
-        dcid = data.docid + 1
-        data.docid += 1
-        data.db[str(dcid)] = tmp
-    print("DocID:" + dcid, end= ' ')
+
+    data.insertrow(tmp)
+    print("DocID:" + str(dcid), end= ' ')
     for key in tmp.keys():
         print(key + ':' + tmp[key], end=' ')
     print()
