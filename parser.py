@@ -5,16 +5,22 @@ import operator
 data = database.database()
 
 def parse(line):
-    l = line.split('.')
-    match("final", l[0])
-    l = l[1]
-    operation = l[:l.index('(')]
-    if operation == "query":
-        query(l[l.find('(') + 1:(l.find(')'))])
-    elif operation == "count":
-        count(l[l.find('(') + 1:(l.find(')'))])
-    elif operation == "insert":
-        insert(l[l.find('(') + 1:(l.find(')'))])
+    print(line)
+    try:
+        l = line.split('.')
+        if not match("final", l[0]):
+            return
+        l = l[1]
+        operation = l[:l.index('(')]
+        if operation == "query":
+            query(l[l.find('(') + 1:(l.find(')'))])
+        elif operation == "count":
+            count(l[l.find('(') + 1:(l.find(')'))])
+        elif operation == "insert":
+            insert(l[l.find('(') + 1:(l.find(')'))])
+    except:
+        print("query semantic error")
+        return
 
 
 def match(expected, real):
@@ -26,6 +32,7 @@ def match(expected, real):
 
 def query(queries):
     tmp = re.findall("\[([A-Za-z0-9_<>=,\d*]+)\]", queries)
+    print(tmp)
     if len(tmp) > 1:
         qs = tmp[0]
         qs = qs.split(',')
@@ -43,7 +50,12 @@ def query(queries):
             select = tmp
             data.printdb(select, data.db)
     else:
-        data.printdb({}, data.db)
+        print(tmp)
+        if "[],[]" in queries:
+            data.printdb({}, data.db)
+        else:
+            print("query semantic error")
+            return
 
 
 def parsequery(queries):
